@@ -3,6 +3,8 @@ package com.dwyoo.spring.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,13 +18,15 @@ import com.dwyoo.spring.command.BModifyCommand;
 import com.dwyoo.spring.command.BReplayViewCommand;
 import com.dwyoo.spring.command.BReplyCommand;
 import com.dwyoo.spring.command.BWriteCommand;
+import com.dwyoo.spring.util.Constant;
 
 //Client요청이 들어오면 Dispather가 받고 autoscan을 통해 controller를 찾고 annotation Controller에서 찾음.
 @Controller
 public class BController {
 
     BCommand command;
-
+    private JdbcTemplate template;
+    
     @RequestMapping("/list")
     public String list(Model model) {
         System.out.println("list"); // sysout으로 로그를 쉽게 넣을 수 있다.
@@ -104,5 +108,16 @@ public class BController {
         command.execute(model);
 
         return "redirect:list";
+    }
+
+    public JdbcTemplate getTemplate() {
+        return template;
+    }
+
+    //자동으로 템플릿 셋
+    @Autowired
+    public void setTemplate(JdbcTemplate template) {
+        this.template = template;
+        Constant.template = template;
     }
 }
