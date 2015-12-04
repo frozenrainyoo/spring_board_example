@@ -17,3 +17,7 @@ bName char(20),
 //create sequence mvc_board_seq;
 
 select * from mvc_board;
+
+update mvc_board set bHit = bHit + 1 where bid = 1;
+
+update mvc_board set bName = 'dd',bTitle = 'dd', bContent = 'dd' where bid = 1;
